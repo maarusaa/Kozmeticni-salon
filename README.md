@@ -7,10 +7,5 @@ Kozmetični salon potrebuje evidenco zaloge produktov, ki jih lahko stranke kupi
 
 Tabele:
 
-Produkti
-Cena
-Storitev
-Znamka
-Zaloga
-Zaposleni 
+Produkti, cena, storitev, znamka, zaloga, zaposleni 
 
