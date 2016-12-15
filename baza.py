@@ -36,7 +36,18 @@ def idOsebe ( ime, priimek):
 	'''funkcija vrne id osebe'''
 	return con.execute('''select id from stranke where ime = ? and priimek = ?''', [ime, priimek])
 	
-	
+
+def prosti_termini(storitev, teden):
+        vsi_mozni_izvajalci_storitve = ...
+        na_voljo = {
+          1: {8: [3, 8], 9: [3, 8], za vsako uro v ponedeljku},
+          2: {8: [2, 3, 8], 9: [2, 3, 8], za vsako uro v torku},
+          za vsak dan v tednu
+        }
+        for termin in ze_zasedeni_termini_v_tem_tednu:
+                pobrisi termin iz na_voljo
+        
+
 
 	
 ###poskus 2 :D
