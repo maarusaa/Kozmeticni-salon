@@ -37,39 +37,109 @@ def idOsebe ( ime, priimek):
 	return con.execute('''select id from stranke where ime = ? and priimek = ?''', [ime, priimek])
 	
 
-def prosti_termini(storitev, teden):
-        vsi_mozni_izvajalci_storitve = ...
+def prosti_termini(storitev, dan, teden):
+        #kaj ti to naredi? seznam, slovar wtf? :D 
+        vsi_mozni_izvajalci_storitve = con.execute('''select id from zaposleni''')
         na_voljo = {
-          1: {8: [3, 8], 9: [3, 8], za vsako uro v ponedeljku},
-          2: {8: [2, 3, 8], 9: [2, 3, 8], za vsako uro v torku},
-          za vsak dan v tednu
-        }
+          'ponedeljek': {
+                         8: set(vsi_mozni_izvajalci_storitve),
+                         9: set(vsi_mozni_izvajalci_storitve),
+                         10: set(vsi_mozni_izvajalci_storitve),
+                         11: set(vsi_mozni_izvajalci_storitve),
+                         12: set(vsi_mozni_izvajalci_storitve),
+                         13: set(vsi_mozni_izvajalci_storitve),
+                         14: set(vsi_mozni_izvajalci_storitve),
+                         15: set(vsi_mozni_izvajalci_storitve),
+                         16: set(vsi_mozni_izvajalci_storitve),
+                         17: set(vsi_mozni_izvajalci_storitve),
+                         18: set(vsi_mozni_izvajalci_storitve),
+                         19: set(vsi_mozni_izvajalci_storitve),
+                         20: set(vsi_mozni_izvajalci_storitve)
+                         },
+          'torek': {
+                         8: set(vsi_mozni_izvajalci_storitve),
+                         9: set(vsi_mozni_izvajalci_storitve),
+                         10: set(vsi_mozni_izvajalci_storitve),
+                         11: set(vsi_mozni_izvajalci_storitve),
+                         12: set(vsi_mozni_izvajalci_storitve),
+                         13: set(vsi_mozni_izvajalci_storitve),
+                         14: set(vsi_mozni_izvajalci_storitve),
+                         15: set(vsi_mozni_izvajalci_storitve),
+                         16: set(vsi_mozni_izvajalci_storitve),
+                         17: set(vsi_mozni_izvajalci_storitve),
+                         18: set(vsi_mozni_izvajalci_storitve),
+                         19: set(vsi_mozni_izvajalci_storitve),
+                         20: set(vsi_mozni_izvajalci_storitve)
+                         },
+          'sreda': {
+                         8: set(vsi_mozni_izvajalci_storitve),
+                         9: set(vsi_mozni_izvajalci_storitve),
+                         10: set(vsi_mozni_izvajalci_storitve),
+                         11: set(vsi_mozni_izvajalci_storitve),
+                         12: set(vsi_mozni_izvajalci_storitve),
+                         13: set(vsi_mozni_izvajalci_storitve),
+                         14: set(vsi_mozni_izvajalci_storitve),
+                         15: set(vsi_mozni_izvajalci_storitve),
+                         16: set(vsi_mozni_izvajalci_storitve),
+                         17: set(vsi_mozni_izvajalci_storitve),
+                         18: set(vsi_mozni_izvajalci_storitve),
+                         19: set(vsi_mozni_izvajalci_storitve),
+                         20: set(vsi_mozni_izvajalci_storitve)
+                         },
+          'četrtek': {
+                         8: set(vsi_mozni_izvajalci_storitve),
+                         9: set(vsi_mozni_izvajalci_storitve),
+                         10: set(vsi_mozni_izvajalci_storitve),
+                         11: set(vsi_mozni_izvajalci_storitve),
+                         12: set(vsi_mozni_izvajalci_storitve),
+                         13: set(vsi_mozni_izvajalci_storitve),
+                         14: set(vsi_mozni_izvajalci_storitve),
+                         15: set(vsi_mozni_izvajalci_storitve),
+                         16: set(vsi_mozni_izvajalci_storitve),
+                         17: set(vsi_mozni_izvajalci_storitve),
+                         18: set(vsi_mozni_izvajalci_storitve),
+                         19: set(vsi_mozni_izvajalci_storitve),
+                         20: set(vsi_mozni_izvajalci_storitve)
+                         },
+          'petek': {
+                         8: set(vsi_mozni_izvajalci_storitve),
+                         9: set(vsi_mozni_izvajalci_storitve),
+                         10: set(vsi_mozni_izvajalci_storitve),
+                         11: set(vsi_mozni_izvajalci_storitve),
+                         12: set(vsi_mozni_izvajalci_storitve),
+                         13: set(vsi_mozni_izvajalci_storitve),
+                         14: set(vsi_mozni_izvajalci_storitve),
+                         15: set(vsi_mozni_izvajalci_storitve),
+                         16: set(vsi_mozni_izvajalci_storitve),
+                         17: set(vsi_mozni_izvajalci_storitve),
+                         18: set(vsi_mozni_izvajalci_storitve),
+                         19: set(vsi_mozni_izvajalci_storitve),
+                         20: set(vsi_mozni_izvajalci_storitve)
+                         },
+          'sobota': {
+                         8: set(vsi_mozni_izvajalci_storitve),
+                         9: set(vsi_mozni_izvajalci_storitve),
+                         10: set(vsi_mozni_izvajalci_storitve),
+                         11: set(vsi_mozni_izvajalci_storitve),
+                         12: set(vsi_mozni_izvajalci_storitve),
+                         13: set(vsi_mozni_izvajalci_storitve),
+                         14: set(vsi_mozni_izvajalci_storitve),
+                         15: set(vsi_mozni_izvajalci_storitve),
+                         16: set(vsi_mozni_izvajalci_storitve),
+                         17: set(vsi_mozni_izvajalci_storitve),
+                         18: set(vsi_mozni_izvajalci_storitve),
+                         19: set(vsi_mozni_izvajalci_storitve),
+                         20: set(vsi_mozni_izvajalci_storitve)
+                         }
+          }
+     
         for termin in ze_zasedeni_termini_v_tem_tednu:
-                pobrisi termin iz na_voljo
+                na_voljo[dan].remove(termin)
+                
+                #pobrisi termin iz na_voljo
         
 
 
-	
-###poskus 2 :D
-##def vnesiRacun(dat, ime, priimek, izdelki, storitve):
-##    """Izdelki in storitve -> slovar, kljuc je ime izdelka/storitve, vrednost je pa količina"""
-##    #for x in con.execute('''SELECT ime,priimek FROM stranke WHERE ime = ? AND priimek = ?''', (ime, priimek)):print(x)
-##    if ime,priimek not in con.execute('''SELECT ime,priimek FROM stranke WHERE ime = ? AND priimek = ?''', [ime, priimek]):
-##            con.execute('''insert into stranke (ime, priimek) VALUES (?, ?)''', [ime, priimek])
-##    
-##    oseba = con.execute('''SELECT id FROM stranke where ime = ? AND priimek = ?''', [ime,priimek])
-##    print(oseba)
-##    cur = con.execute('''insert into racuni (datum, stranka) values (?, ?)''', [dat, oseba])
-##    racun = cur.lastrowid
-##    for izdelek in izdelki:
-##            cur.execute('''insert into racun_izdelek (st_racuna, izdelek, kolicina) VALUES (?, ?, ?)''', [racun, izdelek, izdelki[izdelek]])
-##    for storitev in storitve:
-##            cur.execute('''insert into racun_storitve (st_racuna, storitev, kolicina) VALUES (?, ?, ?)''', [racun, storitev, storitve[storitev]])
-##    cur.execute('''
-##    UPDATE racuni SET znesek =
-##    (SELECT sum(cena) FROM racun_izdelek JOIN kozmeticni_izdelki ON racun_izdelek.izdelek = id WHERE st_racuna = ?) +
-##    (SELECT sum(cena) FROM racun_storitve JOIN kozmeticne_storitve ON racun_storitve.storitev = id WHERE st_racuna = ?)''', [racun, racun])
-##    con.commit()
 
 	
 
