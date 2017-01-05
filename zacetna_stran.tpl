@@ -1,14 +1,26 @@
 %rebase('osnova.tpl')
 <h1>KOZMETIČNI SALON</h1>
-<p>Pozdravljeni na .... </p>
-<div class="row">
-    <div class="container">
-        <table class="highlight">
-            <ul>
-                <li><a href="/izdelki/">Izdelki</a></li>
-                <li><a href="#">Storitve</a></li>
-                <li><a href="#">Termini</a></li>
-            </ul>
-    </div>
+
+
+<div class ="Row center">
+<form>
+
+  <a href="/izdelki/">Izdelki
+  </a>
+
+  <a href="/storitve/">Storitve
+  </a>
+  
+  <a href="/termini/">Termini
+  </a>
+
+    <a href="/racun/">Račun
+  </a>
+  
+</form>
 </div>
+
+
+
+
 

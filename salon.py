@@ -16,14 +16,25 @@ def domaca_stran():
 def seznam_izdelkov():
     return template('izdelki',
         kozmeticni_izdelki = baza.seznamIzdelkov()
-    )
+                    )
 
-##@route('/storitev/<storitev>/kozmeticni_salon')
-##def urnik_letnika(letnik):
-##    return template(
-##        'storitve',
-##        srecanja=modeli.urnik_letnika(letnik)
-##    )
+@route('/storitve/')
+def seznam_storitev():
+    return template('storitve',
+        kozmeticne_storitve = baza.seznamStoritev()
+                    )
+
+@route('/termini/')
+def termini():
+    return template('termini')
+
+@route('/racun/')
+def termini():
+    return template('racun',
+        kozmeticne_storitve = baza.seznamStoritev(),
+        kozmeticni_izdelki = baza.seznamIzdelkov()
+                    )
+                    
 ##
 ##
 ##@route('/izdelki/<izdelki>/kozmeticni_salon')

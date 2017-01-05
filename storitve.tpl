@@ -5,13 +5,13 @@
         <table class="highlight">
             <thead>
                 <tr>
-                    <th>Izdelki</th>
+                    <th>Storitve</th>
                 </tr>
             </thead>
             <tbody>
-                %for izdelek in kozmeticni_izdelki:
+                %for storitev in kozmeticne_storitve:
                 <tr>
-                    <td></izdelek/{{izdelek['id']}}/kozmeticni_salon">{{izdelek['izdelek']}} {{izdelek['cena']}}</td>
+                    <td></storitev/{{storitev['id']}}/kozmeticni_salon">{{storitev['storitev']}} {{storitev['cena']}} {{storitev['cas']}}</td>
                 </tr>
                 %end
             </tbody>
