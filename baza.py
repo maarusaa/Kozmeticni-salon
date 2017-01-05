@@ -1,5 +1,6 @@
 import sqlite3
 con = sqlite3.connect("kozmeticni_salon.sqlite")
+con.row_factory = sqlite3.Row
 
 #original :D 
 def vnesiRacun(dat, oseba, izdelki, storitve):
@@ -36,6 +37,10 @@ def vstaviOsebo(ime, priimek):
 def idOsebe(ime, priimek):
         '''funkcija vrne id osebe'''
         return con.execute('''select id from stranke where ime = ? and priimek = ?''', [ime, priimek])
+		
+	
+def seznamIzdelkov():
+	return list(con.execute('''select id from kozmeticni_izdelki'''))
         
 
 def prosti_termini(storitev, dan, teden):
@@ -117,21 +122,7 @@ def prosti_termini(storitev, dan, teden):
                          19: set(vsi_mozni_izvajalci_storitve),
                          20: set(vsi_mozni_izvajalci_storitve)
                          },
-          'sobota': {
-                         8: set(vsi_mozni_izvajalci_storitve),
-                         9: set(vsi_mozni_izvajalci_storitve),
-                         10: set(vsi_mozni_izvajalci_storitve),
-                         11: set(vsi_mozni_izvajalci_storitve),
-                         12: set(vsi_mozni_izvajalci_storitve),
-                         13: set(vsi_mozni_izvajalci_storitve),
-                         14: set(vsi_mozni_izvajalci_storitve),
-                         15: set(vsi_mozni_izvajalci_storitve),
-                         16: set(vsi_mozni_izvajalci_storitve),
-                         17: set(vsi_mozni_izvajalci_storitve),
-                         18: set(vsi_mozni_izvajalci_storitve),
-                         19: set(vsi_mozni_izvajalci_storitve),
-                         20: set(vsi_mozni_izvajalci_storitve)
-                         }
+          'sobota': {ura: set(vsi_mozni_izvajalci_storitve) for ura in range(8, 21)}
           }
      
         for termin in ze_zasedeni_termini_v_tem_tednu:

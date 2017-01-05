@@ -5,13 +5,18 @@ import baza
 @route('/')
 def domaca_stran():
     return template(
-        'domaca_stran',
-        storitve=baza.kozmeticne_storitve(),
-        izdelki=baza.kozmeticni_izdelki(),
-        zaposleni=baza.zaposleni(),
-	termini = baza.termin()
+        'zacetna_stran',
+##        storitve=baza.kozmeticne_storitve(),
+##        izdelki=baza.kozmeticni_izdelki(),
+##        zaposleni=baza.zaposleni(),
+##        termini = baza.termin()
     )
 
+@route('/izdelki/')
+def seznam_izdelkov():
+    return template('izdelki',
+        kozmeticni_izdelki = baza.seznamIzdelkov()
+    )
 
 ##@route('/storitev/<storitev>/kozmeticni_salon')
 ##def urnik_letnika(letnik):
@@ -37,4 +42,4 @@ def domaca_stran():
 ##    )
 
 
-run(debug=True, reloader=True)
+run(debug=True)
