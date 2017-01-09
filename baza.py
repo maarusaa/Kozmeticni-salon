@@ -3,13 +3,13 @@ con = sqlite3.connect("kozmeticni_salon.sqlite")
 con.row_factory = sqlite3.Row
 
 def vnesiRacun(dat, oseba, izdelki, storitve):
-        '''Izdelki in storitve -> slovar, kljuc je ime izdelka/storitve, vrednost je pa količina'''
+        '''Izdelki in storitve -> seznam'''
         cur = con.execute('''insert into racuni (datum, stranka) values (?, ?)''', [dat, oseba])
         racun = cur.lastrowid
         for izdelek in izdelki:
-                cur.execute('''insert into racun_izdelek (st_racuna, izdelek, kolicina) VALUES (?, ?, ?)''', [racun, izdelek, izdelki[izdelek]])
+                cur.execute('''insert into racun_izdelek (st_racuna, izdelek) VALUES (?, ?)''', [racun, izdelek])
         for storitev in storitve:
-                cur.execute('''insert into racun_storitve (st_racuna, storitev, kolicina) VALUES (?, ?, ?)''', [racun, storitev, storitve[storitev]])
+                cur.execute('''insert into racun_storitve (st_racuna, storitev) VALUES (?, ?)''', [racun, storitev])
         cur.execute('''
         UPDATE racuni SET znesek =
         (SELECT sum(cena) FROM racun_izdelek JOIN kozmeticni_izdelki ON racun_izdelek.izdelek = id WHERE st_racuna = ?) +
@@ -24,17 +24,16 @@ def idStoritve(storitev):
         '''funkcija vrne id storitve'''
         return  con.execute('''select id from kozmeticne_storitve where storitev = ?''', [storitev])
         
-def vstaviOsebo(ime, priimek):
-        '''vstavi novo osebo v tabelo stranke'''
-        try:
-                con.execute('''insert into stranke (ime, priimek) VALUES (?, ?)''', [ime, priimek])
-        except:
-                # že obstaja
-                pass
-
 def idOsebe(ime, priimek):
-        '''funkcija vrne id osebe'''
-        return con.execute('''select id from stranke where ime = ? and priimek = ?''', [ime, priimek])
+        '''vstavi novo osebo v tabelo stranke in vrne id'''
+        oseba = con.execute('''select id from stranke where ime = ? and priimek = ?''', [ime, priimek]).fetchone()#nam vrne osebo ali None, ce ga se ni v bazi
+        if oseba is not None:
+                return oseba['id']
+        else:
+                cur = con.execute('''insert into stranke (ime, priimek) VALUES (?, ?)''', [ime, priimek])
+                con.commit()
+                return cur.lastrowid
+
 		
 	
 def seznamIzdelkov():

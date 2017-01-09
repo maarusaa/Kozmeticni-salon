@@ -5,12 +5,8 @@ import baza
 @route('/')
 def domaca_stran():
     return template(
-        'zacetna_stran',
-##        storitve=baza.kozmeticne_storitve(),
-##        izdelki=baza.kozmeticni_izdelki(),
-##        zaposleni=baza.zaposleni(),
-##        termini = baza.termin()
-    )
+        'zacetna_stran'
+        )
 
 @route('/izdelki/')
 def seznam_izdelkov():
@@ -29,28 +25,27 @@ def termini():
     return template('termini')
 
 @route('/racun/')
-def termini():
+def racun():
     return template('racun',
         kozmeticne_storitve = baza.seznamStoritev(),
         kozmeticni_izdelki = baza.seznamIzdelkov()
                     )
+
+@post('/racun/')
+def racun_post():
+    ime = request.forms.ime
+    priimek = request.forms.priimek
+    dat = request.forms.datum
+    storitve = request.forms.getall('storitve')
+    izdelki = request.forms.getall('izdelki')
+    oseba = baza.idOsebe(ime, priimek)
+    baza.vnesiRacun(dat, oseba, izdelki, storitve)
+
+    redirect('/')
                     
-##
-##
-##@route('/izdelki/<izdelki>/kozmeticni_salon')
-##def urnik_osebe(oseba):
-##    return template(
-##        'izdelki',
-##        srecanja=modeli.urnik_osebe(oseba)
-##    )
-##
-##
-##@route('/termini/<termini>/kozmeticni_salon')
-##def urnik_ucilnice(ucilnica):
-##    return template(
-##        'termini',
-##        srecanja=modeli.urnik_ucilnice(ucilnica)
-##    )
+@route('/images/<filename:re:.*\.png>')
+def send_image(filename):
+    return static_file(filename, root='/path/to/image/files', mimetype='image/png')
 
 
 run(debug=True)
