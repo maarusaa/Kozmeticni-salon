@@ -5,6 +5,9 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+
+	
 	<style>
 		.zavihek {
 			width: 24%;
@@ -48,7 +51,19 @@
 			border-collapse:collapse;
 			color: black;
 		}
+		
+		
+		html, body{
+		  margin:0;
+		  padding:0;
+		  height: 100%;
+		}
+		#scheduler {
+		  border-width: 0;
+		  height: 100%;
+		}
 
+		
 	</style>
 	
 

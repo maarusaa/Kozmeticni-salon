@@ -1,6 +1,7 @@
 from bottle import *
 import baza
 
+meseci = ['Januar', 'Februar', 'Marec', 'April', 'Maj','Junij','Julij','Avgust','September','Oktober','November','December']
 
 @route('/')
 def domaca_stran():
@@ -22,7 +23,27 @@ def seznam_storitev():
 
 @route('/termini/')
 def termini():
-    return template('termini')
+    return template('termini',
+        meseci = meseci,
+                    
+        kozmeticne_storitve = baza.seznamStoritev(),
+        zaposleni = izvajalciZaStoritev
+        
+                    )
+
+@post('/termini/')
+def termini_post():
+    mesec = request.forms.mesec
+    izbraniDan = request.forms.dan
+    storitev = request.forms.storitev
+    izvajalciZaStoritev = baza.izvjalciZaStoritev(storitev)
+ 
+
+
+    
+    redirect('/')
+    
+    
 
 @route('/racun/')
 def racun():
@@ -38,14 +59,26 @@ def racun_post():
     dat = request.forms.datum
     storitve = request.forms.getall('storitve')
     izdelki = request.forms.getall('izdelki')
+
     oseba = baza.idOsebe(ime, priimek)
     baza.vnesiRacun(dat, oseba, izdelki, storitve)
 
     redirect('/')
+
+
+@route('/znesek/')
+def znesek():
+    return template('znesek',
+                    storitve = baza.izbraneStoritve()
+                    #izdelki = baza.izbraniIzdelki(),
+                    #znesek = baza.znesek()
+                )
+
+
                     
-@route('/images/<filename:re:.*\.png>')
-def send_image(filename):
-    return static_file(filename, root='/path/to/image/files', mimetype='image/png')
+@route('/static/<filename>')
+def static(filename):
+    return static_file(filename, root='static')
 
 
 run(debug=True)
