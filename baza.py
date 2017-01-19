@@ -16,6 +16,7 @@ def vnesiRacun(dat, oseba, izdelki, storitve):
         (SELECT sum(cena) FROM racun_storitve JOIN kozmeticne_storitve ON racun_storitve.storitev = id WHERE st_racuna = ?)
         WHERE id = ?''', [racun, racun, racun])
         con.commit()
+        return racun
         
 def idIzdelka(izdelek):
         '''funkcija vrne id izdelka.'''
@@ -52,26 +53,34 @@ def seznamIzvajalcev():
 ##        return list(con.execute('''select st_racuna, storitev from racun_storitve where st_racuna = ?''', [racun]))
 
 
-def izbraneStoritve():
-        cur = con.execute('''SELECT max(id) FROM racuni''')
-        racun= cur.fetchone()[0]
-        storitve = list(con.execute('''select st_racuna, storitev from racun_storitve where st_racuna = ?''', [racun]))
-        for storitev in storitve:
-                print(storitev)
-                print ( con.execute('''select storitev from kozmeticne_storitve where id= ?''', [storitev['st_racuna']]) )
+def izbraneStoritve(racun):
+        #cur = con.execute('''SELECT max(id) FROM racuni''')
+        #racun= cur.fetchone()[0]
+        return list(con.execute('''select kozmeticne_storitve.storitev, kozmeticne_storitve.cena
+                                        from racun_storitve join kozmeticne_storitve on kozmeticne_storitve.id = racun_storitve.storitev
+                                        where st_racuna = ?''', [racun]))
+        #for storitev in storitve:
+        #        return con.execute('''select storitev from kozmeticne_storitve where id= ?''', [storitev['st_racuna']]) 
 
 
 
-def izbraniIzdelki():
-        cur = con.execute('''SELECT max(id) FROM racuni''')
-        racun= cur.fetchone()[0]
-        return list(con.execute('''select izdelek from racun_izdelek where st_racuna = ?''', [racun]))
+def izbraniIzdelki(racun):
+        return list(con.execute('''select kozmeticni_izdelki.izdelek, kozmeticni_izdelki.cena
+                                        from racun_izdelek join kozmeticni_izdelki on kozmeticni_izdelki.id = racun_izdelek.izdelek
+                                        where st_racuna = ?''', [racun]))
 
-def znesek():
+def znesek(racun):
         cur = con.execute('''SELECT max(id) FROM racuni''')
         racun= cur.fetchone()[0]
         return list(con.execute('''select znesek from racuni where id = ?''', [racun]))
 
+
+def izpisImena(racun):
+        return con.execute('''select ime, priimek from racuni join stranke on racuni.stranka = stranke.id where racuni.id = ? ''', [racun])
+
+def izpisDatuma(racun):
+        return con.execute('''select datum from racuni where id = ?''', [racun])
+        
 ##def imenaStoritev(storitve):
 ##        for storitev in storitve:
 ##                return con.execute('''select storitev from kozmeticne_storitve where id= ?''', [storitev['st_racuna']])

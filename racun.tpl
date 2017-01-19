@@ -60,7 +60,7 @@
 			
 		<div class="input-field col s12">
             <button type="submit" class="btn waves-effect waves-light zavihek" />Izpiši</button>
-
+        </div>
   
         
 

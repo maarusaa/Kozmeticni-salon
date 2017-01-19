@@ -61,16 +61,20 @@ def racun_post():
     izdelki = request.forms.getall('izdelki')
 
     oseba = baza.idOsebe(ime, priimek)
-    baza.vnesiRacun(dat, oseba, izdelki, storitve)
+    racun = baza.vnesiRacun(dat, oseba, izdelki, storitve)
 
-    redirect('/')
+    redirect('/znesek/{}/'.format(racun))
+
+                 
 
 
-@route('/znesek/')
-def znesek():
+@route('/znesek/<racun:int>/')
+def znesek(racun):
     return template('znesek',
-                    storitve = baza.izbraneStoritve()
-                    #izdelki = baza.izbraniIzdelki(),
+                    storitve = baza.izbraneStoritve(racun),
+                    izdelki = baza.izbraniIzdelki(racun),
+                    oseba = baza.izpisImena(racun),
+                    datum = baza.izpisDatuma(racun)
                     #znesek = baza.znesek()
                 )
 
