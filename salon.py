@@ -27,7 +27,7 @@ def termini():
         meseci = meseci,
                     
         kozmeticne_storitve = baza.seznamStoritev(),
-        zaposleni = izvajalciZaStoritev
+
         
                     )
 

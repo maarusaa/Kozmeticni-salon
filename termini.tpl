@@ -60,16 +60,9 @@
 				</select>
 			 </div>
 				
-			<div class="input-field col s4">
-				<i class="material-icons prefix">account_circle</i>
-                <select name="izvajalec">
-				<option value="" disabled selected>Izvajalec</option>
-				
-				%for izvajalec in zaposleni: 
-					<option value = "{{izvajalec['id']}}">{{izvajalec['ime']}} {{izvajalec['priimek']}}</option>
-				%end
-				</select>
-			 </div>
+			
+
+			 
 				
 				
 			<div class="input-field col s12">

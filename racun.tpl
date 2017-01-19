@@ -60,9 +60,7 @@
 			
 		<div class="input-field col s12">
             <button type="submit" class="btn waves-effect waves-light zavihek" />Izpiši</button>
-			
-			 <a class="waves-effect waves-light btn-large zavihek" href="/znesek/">Znesek</a>
-        </div>
+
   
         
 
