@@ -22,7 +22,7 @@
 		.podnaslov {
 			color: #9c27b0;
 			font-family: "Informal Roman";
-			font-size: 250%;
+			font-size: 45px;
 		}
 		.izpis {
 		color: #ba68c8;
@@ -36,6 +36,18 @@
 			display: inline-block;
 			position: relative;
 			top:100px;
+		}
+		
+		.ime {
+			font-weight: bold;
+			font-size: 15px;
+		}
+		
+		.znesek {
+			font-weight: bold;
+			font-size: 15px;
+			text-align: center;
+			text-indent: 32em;
 		}
 		
 		td {
@@ -53,15 +65,8 @@
 		}
 		
 		
-		html, body{
-		  margin:0;
-		  padding:0;
-		  height: 100%;
-		}
-		#scheduler {
-		  border-width: 0;
-		  height: 100%;
-		}
+		
+		
 
 		
 	</style>

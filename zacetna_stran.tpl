@@ -17,10 +17,11 @@
   <a class="waves-effect waves-light btn-large zavihek" href="/storitve/">Storitve
   </a>
   
-  <a class="waves-effect waves-light btn-large zavihek" href="/termini/">Termini
-  </a>
 
     <a class="waves-effect waves-light btn-large zavihek" href="/racun/">Račun
+  </a>
+  
+  <a class="waves-effect waves-light btn-large zavihek" href="/termini/">Termini
   </a>
 
   
