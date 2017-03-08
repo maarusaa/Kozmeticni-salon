@@ -20,11 +20,13 @@ def vnesiRacun(dat, oseba, izdelki, storitve):
         
 def idIzdelka(izdelek):
         '''funkcija vrne id izdelka.'''
-        return  con.execute('''select id from kozmeticni_izdelki where izdelek = ?''', [izdelek])
+        id_izdelka = con.execute('''select id from kozmeticni_izdelki where izdelek = ?''', [izdelek]).fetchone()
+        return id_izdelka['id']
         
 def idStoritve(storitev):
         '''funkcija vrne id storitve'''
-        return  con.execute('''select id from kozmeticne_storitve where storitev = ?''', [storitev])
+        id_storitve =  con.execute('''select id from kozmeticne_storitve where storitev = ?''', [storitev]).fetchone()
+        return id_storitve['id']
         
 def idOsebe(ime, priimek):
         '''vstavi novo osebo v tabelo stranke in vrne id'''
@@ -35,9 +37,14 @@ def idOsebe(ime, priimek):
                 cur = con.execute('''insert into stranke (ime, priimek) VALUES (?, ?)''', [ime, priimek])
                 con.commit()
                 return cur.lastrowid
+
+
+def idZaposlenega():
+        return list(con.execute('''select id, ime, priimek from zaposleni'''))
+
 	
 def seznamIzdelkov():
-	return list(con.execute('''select id, cena, izdelek from kozmeticni_izdelki'''))
+	return list(con.execute('''select id, cena, izdelek, zaloga from kozmeticni_izdelki'''))
 
 def seznamStoritev():
 	return list(con.execute('''select id, cena, storitev, cas from kozmeticne_storitve'''))
@@ -46,23 +53,50 @@ def seznamStoritev():
 def seznamIzvajalcev():
         return list(con.execute('''select id, ime, priimek from zaposleni'''))
 
+def dodajIzdelek(ime, cena, zaloga):
+        con.execute('''insert into kozmeticni_izdelki (izdelek, cena, zaloga) VALUES (?,?,?)''', [ime, cena, zaloga])
+        con.commit()
 
-##def izbraneStoritve():
-##        cur = con.execute('''SELECT max(id) FROM racuni''')
-##        racun= cur.fetchone()[0]
-##        return list(con.execute('''select st_racuna, storitev from racun_storitve where st_racuna = ?''', [racun]))
+def dodajStoritev(ime, cena, cas):
+        con.execute('''insert into kozmeticne_storitve (storitev, cena, cas) VALUES (?,?,?)''', [ime, cena, cas])
+        con.commit()
+
+def dodajIzvajalca(storitev, izvajalec):
+        con.execute('''insert into izvaja (storitev, zaposleni) VALUES (?,?)''', [storitev, izvajalec])
+        con.commit()
+
+
+def izbrisiIzdelek(id_izdelka):
+        con.execute('''delete from kozmeticni_izdelki where id = ?''', [id_izdelka])
+
+def odstraniStoritev(id_storitve):
+        con.execute('''delete from kozmeticne_storitve where id = ?''', [id_storitve])
+        
+def odstraniIzvajalca(id_storitve):
+        con.execute('''delete from izvaja where storitev = ?''', [id_storitve])
+
+
+def spremeniCeno(cena, id_izdelka):
+        return con.execute('''update kozmeticni_izdelki set cena = ? where id = ?''',[cena, id_izdelka])
+        con.commit()
+
+def spremeniCenoS(cena, id_storitve):
+        return con.execute('''update kozmeticne_storitve set cena = ? where id = ?''',[cena, id_storitve])
+        con.commit()
+
+def spremeniZalogo(zaloga, id_izdelka):
+        con.execute('''update kozmeticni_izdelki set zaloga = ? where id = ?''',[zaloga, id_izdelka])
+        con.commit()
+
+def spremeniIzvajalca(id_storitve, id_izvajalca):
+        con.execute('''update izvaja set zaposleni = ? where storitev = ?''',[id_izvajalca, id_storitve])
+        con.commit()
 
 
 def izbraneStoritve(racun):
-        #cur = con.execute('''SELECT max(id) FROM racuni''')
-        #racun= cur.fetchone()[0]
         return list(con.execute('''select kozmeticne_storitve.storitev, kozmeticne_storitve.cena
                                         from racun_storitve join kozmeticne_storitve on kozmeticne_storitve.id = racun_storitve.storitev
                                         where st_racuna = ?''', [racun]))
-        #for storitev in storitve:
-        #        return con.execute('''select storitev from kozmeticne_storitve where id= ?''', [storitev['st_racuna']]) 
-
-
 
 def izbraniIzdelki(racun):
         return list(con.execute('''select kozmeticni_izdelki.izdelek, kozmeticni_izdelki.cena
@@ -70,32 +104,48 @@ def izbraniIzdelki(racun):
                                         where st_racuna = ?''', [racun]))
 
 def znesek(racun):
-        cur = con.execute('''SELECT max(id) FROM racuni''')
-        racun= cur.fetchone()[0]
-        return list(con.execute('''select znesek from racuni where id = ?''', [racun]))
+        return list(con.execute('''select racuni.znesek from racuni where id = ?''', [racun]))
 
-
+        
 def izpisImena(racun):
         return con.execute('''select ime, priimek from racuni join stranke on racuni.stranka = stranke.id where racuni.id = ? ''', [racun])
 
 def izpisDatuma(racun):
         return con.execute('''select datum from racuni where id = ?''', [racun])
         
-##def imenaStoritev(storitve):
-##        for storitev in storitve:
-##                return con.execute('''select storitev from kozmeticne_storitve where id= ?''', [storitev['st_racuna']])
+def zasedeni(leto, mesec, dan):
+        return con.execute('''select ura, izvajalec from termin where leto = ? and mesec = ? and dan = ?''', [leto, mesec, dan])
+
+def storitveZaposlenega(id_zaposlenega):
+        storitve =  list(con.execute('''select storitev from izvaja where zaposleni = ?''', [id_zaposlenega]))
+        return storitve
+
+def imenaStoritev(id_storitve):
+        for i in range(len(id_storitve)):
+                return list(con.execute('''select storitev from kozmeticne_storitve where id = ?''', [id_storitve[i]]))
 
 
+def prosti_termini(leto, mesec, dan):
+    vsi_mozni_izvajalci_storitve = list(con.execute('''select id, ime, priimek from zaposleni'''))
+    zaseden = zasedeni(leto, mesec, dan)
+    ze_zasedeni= {}
+    for ura, izvajalec in zaseden:
+            if ura not in ze_zasedeni.keys():
+                    ze_zasedeni[ura]= [izvajalec]
+            else:
+                    ze_zasedeni[ura].append(izvajalec)
+    na_voljo = {}
+    for ura in range(8, 20):
+            prosti = []
+            for izvajalec in vsi_mozni_izvajalci_storitve:
+                    if izvajalec['id'] not in ze_zasedeni.get(ura, []):
+                            prosti.append(izvajalec)
+            na_voljo[ura] = prosti
+    return na_voljo
 
-def prosti_termini(storitev, dan, teden):
-        '''funkcija vrne slovar slovarjev.''' 
-        vsi_mozni_izvajalci_storitve = list(con.execute('''select id from zaposleni'''))
-        na_voljo = {dan:{ura: set(vsi_mozni_izvajalci_storitve) for ura in range(8,20)} }
-        print(na_voljo)
-        #for termin in ze_zasedeni_termini_v_tem_tednu:
-         #       na_voljo[dan].remove(termin)
-                
-                #pobrisi termin iz na_voljo
+def rezerviraj(leto, mesec, dan, id_zaposlenega, idOsebe):
+        con.execute('''insert into terimini (leto, mesec, dan, izvajalec, stranka) VALUES (?,?,?,?,?)''', [leto, mesec, dan, id_zaposlenega, idOsebe])
+
 
 
 
