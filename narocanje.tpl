@@ -2,16 +2,36 @@
 
 <body bgcolor = "#f3e5f5">
 
-<p class = "podnaslov"> Tu je spisek terminov za {{dan}}. {{mesec}}. {{leto}}</p>
+<p class = "podnaslov"> Termini za {{dan}}. {{mesec}}. {{leto}}</p>
 
-<ul>
-%for ura, zaposleni in termini.items():
-<li> ob {{ura}} so prosti:
-%for zaposlen in zaposleni:
-<a href = "/narocanje/{{leto}}/{{mesec}}/{{dan}}/{{zaposlen['id']}}/">{{zaposlen['ime']}} {{zaposlen['priimek']}}</a>
-%end
-</li>
-%end
-</ul>
+
+<div class="row">
+    <div class="col s7">
+        <table class="highlight">
+            <tbody class="okvir_tabela">
+                <table>
+				<tr class="izpis">
+				
+				<th>Prosti</th>
+				</tr>
+				
+				<td>
+				%for ura, zaposleni in termini.items():
+				{{ura}}:00: <br>
+				%for zaposlen in zaposleni: 
+				<a href = "/narocanje/{{leto}}/{{mesec}}/{{dan}}/{{ura}}/{{zaposlen['id']}}/">{{zaposlen['ime']}} {{zaposlen['priimek']}}</a><br>
+				%end
+				%end
+				</td>
+				
+				
+				</table>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
 
 

@@ -117,7 +117,7 @@ def zasedeni(leto, mesec, dan):
         return con.execute('''select ura, izvajalec from termin where leto = ? and mesec = ? and dan = ?''', [leto, mesec, dan])
 
 def storitveZaposlenega(id_zaposlenega):
-        storitve =  list(con.execute('''select storitev from izvaja where zaposleni = ?''', [id_zaposlenega]))
+        storitve =  list(con.execute('''select kozmeticne_storitve.storitev from kozmeticne_storitve join izvaja on izvaja.storitev = kozmeticne_storitve.id where izvaja.zaposleni = ?''', [id_zaposlenega]))
         return storitve
 
 def imenaStoritev(id_storitve):

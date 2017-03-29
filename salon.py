@@ -24,17 +24,17 @@ def narocanje(leto, mesec, dan):
         'termini': baza.prosti_termini(leto, mesec, dan)
     })
 
-@get('/narocanje/<leto:int>/<mesec:int>/<dan:int>/<id_zaposlenega:int>/')
-def izvajalec(leto, mesec, dan, id_zaposlenega):
+@get('/narocanje/<leto:int>/<mesec:int>/<dan:int>/<ura:int>/<id_zaposlenega:int>/')
+def izvajalec(leto, mesec, dan, ura, id_zaposlenega):
     return template('izvajalec',
             storitve = baza.storitveZaposlenega(id_zaposlenega))
 
-@post('/narocanje/<leto:int>/<mesec:int>/<dan:int>/<id_zaposlenega:int>/')
-def izvajalec(leto, mesec, dan, id_zaposlenega):
+@post('/narocanje/<leto:int>/<mesec:int>/<dan:int>/<ura:int>/<id_zaposlenega:int>/')
+def izvajalec(leto, mesec, dan, ura, id_zaposlenega):
     ime = request.forms.ime
     priimek = request.forms.priimek
     idOsebe = baza.idOsebe(ime, priimek)
-    baza.rezerviraj(leto, mesec, dan, id_zaposlenega, idOsebe)
+    baza.rezerviraj(leto, mesec, dan, ura, id_zaposlenega, idOsebe)
     redirect('/')
     
 

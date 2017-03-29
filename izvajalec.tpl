@@ -3,7 +3,7 @@
 <body bgcolor = "#f3e5f5">
 <h2 class="podnaslov"> Rezervacija</h2>
 
-<form action="/narocanje/<leto:int>/<mesec:int>/<dan:int>/<id_zaposlenega:int>/" method="post">
+<form action = '/narocanje/<leto:int>/<mesec:int>/<dan:int>/<ura:int>/<id_zaposlenega:int>/' method = 'POST'>
     <div class="row">
 		 <div class="row">
 
@@ -20,7 +20,7 @@
             </div>
 		</div> 
 	</div>
-</form>
+
 
 
 <div class="input-field col s12"> 
@@ -38,3 +38,6 @@
 		<div class="input-field col s12">
             <button type="submit" class="btn waves-effect waves-light zavihek" />Rezerviraj</button>
         </div>
+		
+		
+</form>
