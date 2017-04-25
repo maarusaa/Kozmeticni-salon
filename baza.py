@@ -143,9 +143,9 @@ def prosti_termini(leto, mesec, dan):
             na_voljo[ura] = prosti
     return na_voljo
 
-def rezerviraj(leto, mesec, dan, id_zaposlenega, idOsebe):
-        con.execute('''insert into terimini (leto, mesec, dan, izvajalec, stranka) VALUES (?,?,?,?,?)''', [leto, mesec, dan, id_zaposlenega, idOsebe])
-
+def rezerviraj(leto, mesec, dan, ura, id_zaposlenega, idOsebe):
+        con.execute('''insert into termin (leto, mesec, dan, ura, izvajalec, stranka) VALUES (?,?,?,?,?,?)''', [leto, mesec, dan, ura, id_zaposlenega, idOsebe])
+        con.commit()
 
 
 

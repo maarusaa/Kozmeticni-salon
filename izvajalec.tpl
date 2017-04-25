@@ -3,7 +3,7 @@
 <body bgcolor = "#f3e5f5">
 <h2 class="podnaslov"> Rezervacija</h2>
 
-<form action = '/narocanje/<leto:int>/<mesec:int>/<dan:int>/<ura:int>/<id_zaposlenega:int>/' method = 'POST'>
+<form action = '/narocanje/{{leto}}/{{mesec}}/{{dan}}/{{ura}}/{{id_zaposlenega}}/' method = 'POST'>
     <div class="row">
 		 <div class="row">
 

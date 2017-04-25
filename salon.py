@@ -1,7 +1,6 @@
 from bottle import *
 import baza
 
-meseci = ['Januar', 'Februar', 'Marec', 'April', 'Maj','Junij','Julij','Avgust','September','Oktober','November','December']
 
 @route('/')
 def domaca_stran():
@@ -27,10 +26,17 @@ def narocanje(leto, mesec, dan):
 @get('/narocanje/<leto:int>/<mesec:int>/<dan:int>/<ura:int>/<id_zaposlenega:int>/')
 def izvajalec(leto, mesec, dan, ura, id_zaposlenega):
     return template('izvajalec',
+                    {
+                'dan': dan,
+                'mesec': mesec,
+                'leto': leto,
+                 'ura':ura,
+                'id_zaposlenega': id_zaposlenega},
             storitve = baza.storitveZaposlenega(id_zaposlenega))
 
 @post('/narocanje/<leto:int>/<mesec:int>/<dan:int>/<ura:int>/<id_zaposlenega:int>/')
 def izvajalec(leto, mesec, dan, ura, id_zaposlenega):
+    
     ime = request.forms.ime
     priimek = request.forms.priimek
     idOsebe = baza.idOsebe(ime, priimek)
